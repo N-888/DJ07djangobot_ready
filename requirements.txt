@@ -1,0 +1,10 @@
+# Устанавливаем Django как основной веб-фреймворк проекта.
+Django
+# Устанавливаем Django REST Framework для создания API.
+djangorestframework
+# Устанавливаем библиотеку pyTelegramBotAPI, которая импортируется в коде как telebot.
+pyTelegramBotAPI
+# Устанавливаем requests для отправки HTTP-запросов из Telegram-бота в Django API.
+requests
+# Устанавливаем python-dotenv для загрузки переменных из файла .env.
+python-dotenv
