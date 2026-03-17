@@ -26,6 +26,9 @@ API_BASE_URL = os.getenv('DJANGO_API_BASE_URL', 'http://127.0.0.1:8000/api')
 # Собираем полный адрес endpoint регистрации и на всякий случай убираем лишний слеш в конце базового URL.
 REGISTER_URL = f"{API_BASE_URL.rstrip('/')}/register/"
 
+print(f"BOT_TOKEN найден: {bool(BOT_TOKEN)}")
+print(f"REGISTER_URL = {REGISTER_URL}")
+
 # Проверяем, что токен действительно заполнен, иначе сразу завершаем запуск понятной ошибкой.
 if not BOT_TOKEN:
     # Выбрасываем исключение с подсказкой, чтобы пользователь не запускал бота с пустым токеном.
@@ -68,7 +71,17 @@ def start_command(message: Message) -> None:
     # Перехватываем ошибку, если сервер вернул не JSON.
     except ValueError:
         # Подменяем данные безопасным словарем с текстом ошибки.
-        response_data = {'message': 'Сервер вернул ответ в неожиданном формате.'}
+        print('Django вернул не JSON')
+        print(f'HTTP статус: {response.status_code}')
+        print(f'Content-Type: {response.headers.get("Content-Type")}')
+        print('Тело ответа:')
+        print(response.text[:3000])
+
+        bot.send_message(
+            message.chat.id,
+            '❌ API Django вернул не JSON. Смотрите терминал bot_main.py.',
+        )
+        return
 
     # Проверяем, что пользователь только что был успешно зарегистрирован.
     if response.status_code == 201:
@@ -119,4 +132,4 @@ if __name__ == '__main__':
     # Пишем в консоль, что бот запущен и готов принимать сообщения.
     print('Telegram-бот запущен и ожидает сообщения...')
     # Запускаем бесконечный опрос Telegram-серверов и автоматически восстанавливаемся после временных сбоев.
-    bot.infinity_polling(timeout=10, long_polling_timeout=5)
+    bot.infinity_polling(skip_pending=True, timeout=30, long_polling_timeout=30)
