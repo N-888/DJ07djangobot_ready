@@ -67,3 +67,12 @@ djangobot_ready/
 работа с оплатами;
 
 команды /help, /profile, /orders и многое другое.
+
+---
+
+## Контакты
+
+- **Telegram:** [@Tpomoschnik](https://t.me/Tpomoschnik)
+- **Телефон:** +7-925-104-10-73
+- **Email:** mamambell@gmail.com
+- **GitHub:** [N-888](https://github.com/N-888)
